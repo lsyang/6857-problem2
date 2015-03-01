@@ -1,26 +1,37 @@
 import hashlib
 import base64
+import numpy as np
 
-PrevHash='77a22709b4f6ad7c13c1a5c898cb63872ed00be3eadbd94e6b32482fe7518d51'
+PrevHash='0000000000000000000000000000000000000000000000000000000000000000'[::-1]
 Contents="1"
-Length=1
+Length=np.uint32(1)
 difficulty=24
 
+Nonce=np.uint64(15610264)
+
 def try_hash(Nonce):
-    Hash = hashlib.sha256(PrevHash.decode("hex") + bytes(Contents) + bytes(Nonce) + bytes(Length))
-##    print Nonce
+    Hash = hashlib.sha256()
+    Hash.update(PrevHash.decode("hex"))
+    Hash.update(Contents)
+    Hash.update(Nonce)
+    Hash.update(Length)
+    b = Hash.digest()[::-1].encode("hex")[0:difficulty]
+    ##    print Nonce
 ##    print Hash.digest().encode("hex")
-    b = Hash.digest().encode("hex")[0:difficulty]
+##    print Hash.digest()[::-1].encode('hex_codec')
+##    print b
     if (b=='0'*24):
         return True
     else:
         return False
 
 def loop():
-    
-    for i in range(2**20,2**30):
-        if try_hash(i):
+    i=0
+    while i<2**64:
+        if try_hash(np.uint64(i)):
             print i
             return i
+        i+=1
+ 
 
 loop()
