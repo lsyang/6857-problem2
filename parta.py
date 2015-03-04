@@ -2,12 +2,10 @@ import hashlib
 import base64
 import numpy as np
 
-#works for http://6857coin.csail.mit.edu/block/0000005a67fc720f55953ee20e47b96c47b751bb0214c2a6d4593b066ecc3738
-
-PrevHash='00000099e3f4ca4995c4558b32de66203a323c8aea77a273c86c7ee029ac7b4b'
-Contents='32'.encode('hex')
-Length="{0:0{1}x}".format(2,8)
-difficulty=24
+PrevHash='77a22709b4f6ad7c13c1a5c898cb63872ed00be3eadbd94e6b32482fe7518d51'
+Contents='11'.encode('hex')
+Length="{0:0{1}x}".format(1,8)
+difficulty=6
 
 
 
@@ -36,4 +34,4 @@ def loop():
  
 
 #loop()
-try_hash("{0:0{1}x}".format(15610264,16))
+try_hash(hex(6732080969929779909)[2:][0:-1].zfill(16))
